@@ -3,39 +3,30 @@ module Model
     class SmartPlayer
       include BaseIAPlayer
 
-      attr_reader :marker
-
-      def choose_move(board:, actual_player:, another_player:)
-        best_space = board.available_spaces.max_by do |space|
-          move = Action.new(performer: self, space: space)
-          move.apply
-          rank_value = -1 * best_move(board: board, actual_player: another_player, another_player:   actual_player )
-          move.undo
-          rank_value
-        end
-        Action.new(performer: self, space: best_space)
+      def choose_move(board:, another_player:)
+        @best_score = {}
+        negamax(board: board, another_player: another_player)
+        selected_space = @best_score.max_by {|key, value| value}.first
+        Action.new(performer: self, space: selected_space)
       end
 
-      private
-
-      def best_move(board:, actual_player: nil, another_player:, depth: 0)
-        if board.tied?
-          0
-        elsif board.conquered_by?(player: self)
-          10 - depth
-        elsif board.conquered_by?(player: another_player)
-          -10
-        else
-          better_move = nil
-          board.available_spaces.each do |space|
-            move = Action.new(performer: self, space: space)
-            move.apply
-            result = best_move(board: board, another_player: another_player, depth: depth + 1)
-            move.undo
-            better_move = result if better_move.nil? || result > better_move
-          end
-          better_move
+      def negamax(board:, depth: 0, alpha: -1000, beta: 1000, color: 1, another_player:)
+        return 0 if board.tied?
+        return color * (1000 / depth) if board.conquered_by?(player: self)
+        return color * (-1000 / depth) if board.conquered_by?(player: another_player)
+        max = -1000
+        board.available_spaces.each do |space|
+          player = color.positive? ? self : another_player
+          action = Action.new(performer: player, space: space)
+          action.apply
+          negamax_value = -negamax(board: board, depth: depth+1, beta: -beta, alpha: -alpha, color: -color, another_player: another_player)
+          action.undo
+          max = [max, negamax_value].max
+          @best_score[space] = max if depth == 0
+          alpha = [alpha, negamax_value].max
+          return alpha if alpha >= beta
         end
+        max
       end
     end
   end

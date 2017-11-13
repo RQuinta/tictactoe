@@ -48,7 +48,7 @@ class TicTacToe
   def setup_match
     markers = %w[X O]
     players = markers.map { |marker| create_player(marker: marker) }
-    @match = Match.new(players: players)
+    @match = Model::Match.new(players: players)
   end
 
   def print_outcome

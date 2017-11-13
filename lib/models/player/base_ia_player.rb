@@ -1,14 +1,10 @@
 module Model
   module Player
     module BaseIAPlayer
-      include BasePlayer
+      attr_reader :marker
 
       def initialize(marker:, **_)
         @marker = marker
-      end
-
-      def dummy?
-        false
       end
     end
   end

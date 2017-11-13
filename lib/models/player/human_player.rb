@@ -1,7 +1,7 @@
 module Model
   module Player
     class HumanPlayer
-      include BasePlayer
+      attr_reader :marker
 
       def initialize(marker:, shell:)
         @marker = marker
