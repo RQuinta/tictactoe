@@ -38,26 +38,31 @@ module Model
       @matrix.column_vectors.map(&:to_a)
     end
 
+    def spaces
+      @spaces = rows.flatten
+    end
+
     private
 
     def diagonals
+      return @diagonals if defined? @diagonals
       @diagonals = [primary_diagonal, secondary_diagonal]
     end
 
     def primary_diagonal
+      return @primary_diagonal if defined? @primary_diagonal
       @primary_diagonal = spaces.select(&:diagonal?)
     end
 
     def secondary_diagonal
+      return @secondary_diagonal if defined? @secondary_diagonal
       @secondary_diagonal = spaces.select(&:secondary_diagonal?)
     end
 
     def structures
+      return @structures if defined? @structures
       @structures = [rows, columns, diagonals]
     end
 
-    def spaces
-      @spaces = rows.flatten
-    end
   end
 end

@@ -1,8 +1,5 @@
-ENV['ENV'] ||= 'test'
-
 require 'bundler/setup'
 Bundler.setup
-
 require 'coveralls'
 
 if Coveralls.should_run?
@@ -11,10 +8,10 @@ else
   require 'simplecov'
   SimpleCov.start
 end
-
-require '../loader'
-require 'support/helper'
-require 'support/factory_bot'
+require 'stringio'
+require 'faker'
+require 'factory_bot'
+require_relative '../loader.rb'
 
 RSpec.configure do |config|
   config.order = 'random'

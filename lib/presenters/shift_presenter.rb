@@ -1,9 +1,9 @@
 module Presenter
   class Shift
     class << self
-      def draw(shift:)
-        puts 'Jogador do turno: '
-        Player.draw(player: shift.current_player)
+      def draw(output:, shift:)
+        output.puts 'Jogador do turno: '
+        Player.draw(output: output, player: shift.current_player)
       end
     end
   end

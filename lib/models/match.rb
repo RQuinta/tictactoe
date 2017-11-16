@@ -11,8 +11,8 @@ module Model
 
     def initialize(players:)
       @players = players
-      @board = board || create_board
-      @shift = create_shift
+      create_shift
+      create_board
     end
 
     def a_winner?
@@ -32,7 +32,7 @@ module Model
     private
 
     def create_board
-      Model::Board.new
+      @board = Model::Board.new
     end
 
     def create_shift

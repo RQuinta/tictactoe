@@ -1,28 +1,25 @@
 module Presenter
   class Match
     class << self
-      def welcome
-        puts 'TicTacToe'
+      def welcome(output:)
+        output.puts 'TicTacToe'
       end
 
-      def draw
+      def announce_winner(output:, match:)
+        output.puts 'O ganhador é '
+        Player.draw(output: output, player: match.winner)
       end
 
-      def announce_winner(match:)
-        puts 'O ganhador é '
-        Player.draw(player: match.winner)
+      def announce_shift(output:, match:)
+        Shift.draw(output: output, shift: match.shift)
       end
 
-      def announce_shift(match:)
-        Shift.draw(shift: match.shift)
+      def clear_screen(output:)
+        output.puts "\e[2J\e[f"
       end
 
-      def clear_screen
-        puts "\e[2J\e[f"
-      end
-
-      def tied
-        puts 'Partida empadata'
+      def tied(output:)
+        output.puts 'Partida empadata'
       end
     end
   end

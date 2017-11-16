@@ -1,15 +1,15 @@
 module Presenter
   class Player
     class << self
-      def draw(player:)
-        puts player.class.name + ' ' + player.marker
+      def draw(output:, player:)
+        output.puts player.class.name + ' ' + player.marker
       end
 
-      def ask_for_type(options:)
+      def ask_for_type(input:, output:, options:)
         type = ''
         until options.include? type.to_sym
-          puts 'Entre com o tipo de jogador: ' + options.map(&:to_s).join(', ')
-          type = gets.chomp
+          output.puts 'Entre com o tipo de jogador: ' + options.map(&:to_s).join(', ')
+          type = input.gets.chomp
         end
         type
       end

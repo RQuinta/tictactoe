@@ -8,5 +8,6 @@ gem 'require_all'
 group :test do
   gem 'coveralls', require: false
   gem 'factory_bot'
+  gem 'faker'
   gem 'rspec'
 end

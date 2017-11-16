@@ -3,6 +3,7 @@ module Model
     extend Forwardable
 
     def_delegator :@space, :unchoose, :undo
+    attr_reader :performer, :space
 
     def initialize(performer:, space:)
       @performer = performer
